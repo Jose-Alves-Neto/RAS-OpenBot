@@ -52,8 +52,8 @@ void reverso()
 {
   digitalWrite(motorRP, LOW);
   digitalWrite(motorRN, HIGH);
-  digitalWrite(motorLN, LOW);
-  digitalWrite(motorLP, HIGH);
+  digitalWrite(motorLP, LOW);
+  digitalWrite(motorLN, HIGH);
 }
 
 void esquerda()
