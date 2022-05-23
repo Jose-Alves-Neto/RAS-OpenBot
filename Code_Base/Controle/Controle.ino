@@ -18,7 +18,7 @@ const int pwmEsq = 6;
 
 int desiredRpmDir;
 int desiredRpmEsq;
-int updateTime = 2000;
+int updateTime = 1000;
 // PID Dir
 
 double
