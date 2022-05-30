@@ -18,7 +18,7 @@ const int pwmEsq = 6;
 
 int desiredRpmDir;
 int desiredRpmEsq;
-int updateTime = 2000;
+int updateTime = 1000;
 // PID Dir
 
 double
@@ -26,27 +26,11 @@ double
     kid = 0.644,
     kdd = 0.0837;
 
-double
-    Pd = 0,
-    Id = 0,
-    Dd = 0;
-
-double errorDir;
-unsigned long lastTimeDir = 0;
-
 // PID Esq
 double
     kpe = 0.238,
     kie = 0.862,
     kde = 0.05445;
-
-double
-    Pe = 0,
-    Ie = 0,
-    De = 0;
-
-double errorEsq;
-unsigned long lastTimeEsq = 0;
 
 // TEMPOS
 
