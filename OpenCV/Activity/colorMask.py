@@ -13,7 +13,6 @@ cv.createTrackbar('Hmin', 'Video', 0, 255, nothing)
 cv.createTrackbar('Smin', 'Video', 0, 255, nothing)
 cv.createTrackbar('Vmin', 'Video', 0, 255, nothing)
 
-cv.namedWindow("result")
 cv.createTrackbar('Hmax', 'Video', 0, 255, nothing)
 cv.createTrackbar('Smax', 'Video', 0, 255, nothing)
 cv.createTrackbar('Vmax', 'Video', 0, 255, nothing)
