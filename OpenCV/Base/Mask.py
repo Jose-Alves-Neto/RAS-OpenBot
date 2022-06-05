@@ -25,6 +25,12 @@ def constrain(val, min_val, max_val):
     return min(max_val, max(min_val, val))
 
 
+def resize(img, amount):
+    width = int(img.shape[1] * amount/100)
+    height = int(img.shape[0] * amount/100)
+    return cv.resize(img, (width, height), interpolation=cv.INTER_AREA)
+
+
 def on_low_H_thresh_trackbar(val):
     global h_min
     h_max = cv.getTrackbarPos(max_H_name, window_mask)
@@ -94,7 +100,7 @@ while(True):
         np.hstack([frameMask, result])
     ])
 
-    cv.imshow('Cam', Vert)
+    cv.imshow('Cam', resize(Vert, 50))
 
     k = cv.waitKey(30) & 0xff
     if k == 27:
