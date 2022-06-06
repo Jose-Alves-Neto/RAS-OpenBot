@@ -50,11 +50,6 @@ while(1):
         continue
     elif len(cnts) > 0:
         cnt = sorted(cnts, key=cv.contourArea, reverse=True)[0]
-        M = cv.moments(cnt)
-        if (M['m00'] != 0):
-            cx = int(M['m10']/M['m00'])
-            cy = int(M['m01']/M['m00'])
-            cv.circle(frame, (cx, cy), 7, (0, 0, 255), -1)
         rect = np.int32(cv.boxPoints(cv.minAreaRect(cnt)))
         cv.drawContours(frame, [rect], -1, (0, 255, 255),
                         2)
