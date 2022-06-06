@@ -1,4 +1,3 @@
 {
-    "board": "arduino:avr:uno",
-    "sketch": "Code_Base\\Controle.ino"
+    "board": "arduino:avr:uno"
 }
