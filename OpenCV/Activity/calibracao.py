@@ -1,11 +1,12 @@
+from cv2 import imshow
 import numpy as np
 import cv2 as cv
 import glob
 
 # Dimensões do Tabuleiro de Xadrez
-cbcol = 4
-cbrow = 4
-cbw = 20
+cbcol = 10
+cbrow = 7
+cbw = 15
 
 # Critério
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, cbw, 0.001)
@@ -17,7 +18,8 @@ objp[:, :2] = np.mgrid[0:cbcol, 0:cbrow].T.reshape(-1, 2)
 # Vetores para armazenar os pontos de objeto e pontos de imagem de todas as imagens.
 objpoints = []  # ponto 3d no espaço do mundo real
 imgpoints = []  # ponto 2d no plano da imagem.
-images = glob.glob('.\Images\chess.png')
+images = glob.glob('./Images/Calib/*.png')
+print(images)
 i = 0
 for fname in images:
     print(fname)
@@ -26,18 +28,19 @@ for fname in images:
     # Encontra os cantos do tabuleiro de xadrez
     ret, corners = cv.findChessboardCorners(gray, (cbcol, cbrow), None)
     # Se encontrado, adiciona os pontos de objeto e pontos de imagem (após refiná-los)
-    print(ret)
-    print(corners)
+    #print(ret)
+    #print(corners)
     if ret == True:
         objpoints.append(objp)
         corners2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
         imgpoints.append(corners)
         # Desenha e mostra os cantos
         cv.drawChessboardCorners(img, (cbcol, cbrow), corners2, ret)
-        cv.imwrite('.\Images\calib' +
+        cv.imwrite('./Images/Calib/Results/res' +
                    str(i) + '.jpg', img)
         cv.imshow('img', img)
         cv.waitKey(0)
         i += 1
-
+retval, cameraMatrix, distCoeffs, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+print(retval, distCoeffs, rvecs, tvecs)
 cv.destroyAllWindows()

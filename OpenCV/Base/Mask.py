@@ -106,9 +106,10 @@ def getMaskValue():
     return np.array([h_min, s_min, v_min]), np.array([h_max, s_max, v_max])
 
 
-captura = cv.VideoCapture(0, cv.CAP_MSMF)
+captura = cv.VideoCapture(-1, cv.CAP_MSMF)
 captura.set(cv.CAP_PROP_FRAME_WIDTH, 640)
 captura.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
+print(captura)
 window_mask = 'Colorbars'
 
 cv.namedWindow(window_mask)
