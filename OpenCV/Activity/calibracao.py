@@ -4,9 +4,9 @@ import cv2 as cv
 import glob
 
 # Dimensões do Tabuleiro de Xadrez
-cbcol = 10
-cbrow = 7
-cbw = 15
+cbcol = 7
+cbrow = 9
+cbw = 2
 
 # Critério
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, cbw, 0.001)
@@ -36,11 +36,32 @@ for fname in images:
         imgpoints.append(corners)
         # Desenha e mostra os cantos
         cv.drawChessboardCorners(img, (cbcol, cbrow), corners2, ret)
-        cv.imwrite('./Images/Calib/Results/res' +
+        cv.imwrite('.\Images\Calib\Results\\res' +
                    str(i) + '.jpg', img)
         cv.imshow('img', img)
-        cv.waitKey(0)
+        cv.waitKey(50)
         i += 1
 retval, cameraMatrix, distCoeffs, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 print(retval, distCoeffs, rvecs, tvecs)
+
+np.savez('calibration_data.npz', cameraMatrix=cameraMatrix, distCoeffs=distCoeffs, rvecs=rvecs, tvecs=tvecs)
+
+img = cv.imread('.\Images\Calib\\teste0.png')
+h, w = img.shape[:2]
+newcameramtx, roi = cv.getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, (w,h), 1, (w,h))
+
+# undistort
+dst = cv.undistort(img, cameraMatrix, distCoeffs, None, newcameramtx)
+# crop the image
+x, y, w, h = roi
+dst = dst[y:y+h, x:x+w]
+cv.imwrite('calibresult.png', dst)
+
+mean_error = 0
+for i in range(len(objpoints)):
+    imgpoints2, _ = cv.projectPoints(objpoints[i], rvecs[i], tvecs[i], cameraMatrix, distCoeffs)
+    error = cv.norm(imgpoints[i], imgpoints2, cv.NORM_L2)/len(imgpoints2)
+    mean_error += error
+print( "total error: {}".format(mean_error/len(objpoints)) )
+
 cv.destroyAllWindows()

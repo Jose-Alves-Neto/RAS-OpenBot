@@ -2,6 +2,9 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
+with np.load("calibration_data.npz") as data:
+    mtx, dist, rvecs, tvecs = [data[i] for i in ('cameraMatrix','dist','rvecs','tvecs')]
+    
 max_value = 255
 max_value_H = 360//2
 
